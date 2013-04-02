@@ -40,7 +40,6 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         it { should_not contain_package('cpqacuxe') }
         it { should_not contain_package('hpdiags') }
         it { should_not contain_package('hp-smh-templates') }
-        it { should_not contain_file('/usr/lib/libz.so.1') }
         it { should_not contain_package('hpsmh') }
         it { should_not contain_file('hpsmhconfig') }
         it { should_not contain_service('hpsmhd') }
@@ -64,7 +63,6 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         it { should contain_package('cpqacuxe').with_ensure('present') }
         it { should contain_package('hpdiags').with_ensure('present') }
         it { should contain_package('hp-smh-templates').with_ensure('present') }
-        it { should contain_file('/usr/lib/libz.so.1').with_ensure('present') }
         it { should contain_package('hpsmh').with_ensure('present') }
         it { should contain_file('hpsmhconfig').with_ensure('present') }
         it 'should populate File[hpsmhconfig] with default values' do
@@ -100,18 +98,6 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
           :enable => true
         )}
       end
-
-      context "for operatingsystem OracleLinux operatingsystemrelease 6.0" do
-        let(:pre_condition) { ['user { "hpsmh": }', 'group {"hpsmh": }'].join("\n") }
-        let :facts do {
-          :operatingsystem        => 'OracleLinux',
-          :operatingsystemrelease => '6.0',
-          :lsbmajdistrelease      => '6',
-          :manufacturer           => 'HP'
-        }
-        end
-        it { should contain_file('/usr/lib/libz.so.1').without_ensure('present') }
-      end
     end
   end
 
@@ -121,8 +107,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         let(:pre_condition) { ['user { "hpsmh": ensure => "present", uid => "490" }', 'group {"hpsmh": ensure => "present", gid => "490" }'].join("\n") }
         let :params do {
           :autoupgrade    => true,
-          :service_ensure => 'stopped',
-          :libz_fix       => ''
+          :service_ensure => 'stopped'
         }
         end
         let :facts do {
@@ -137,7 +122,6 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         it { should contain_package('cpqacuxe').with_ensure('latest') }
         it { should contain_package('hpdiags').with_ensure('latest') }
         it { should contain_package('hp-smh-templates').with_ensure('latest') }
-        it { should contain_file('/usr/lib/libz.so.1').with_ensure('') }
         it { should contain_package('hpsmh').with_ensure('latest') }
         it { should contain_file('hpsmhconfig').with_ensure('present') }
         it 'should populate File[hpsmhconfig] with custom values' do

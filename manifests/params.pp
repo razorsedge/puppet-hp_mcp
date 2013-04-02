@@ -73,7 +73,6 @@ class hp_mcp::params {
   case $::operatingsystem {
     'CentOS': {
       $yum_path = '/SDR/downloads/ManagementComponentPack/CentOS/$releasever/$basearch/'
-      $libz_fix = 'present'
       case $::operatingsystemrelease {
         /^5.[0-2]/: {
           $ipmi_package_name = 'hp-OpenIPMI'
@@ -97,7 +96,6 @@ class hp_mcp::params {
     }
     'OracleLinux', 'OEL': {
       $yum_path = '/SDR/downloads/ManagementComponentPack/Oracle/$releasever/$basearch/'
-      $libz_fix = undef
       case $::operatingsystemrelease {
         /^5.[0-2]/: {
           $ipmi_package_name = 'hp-OpenIPMI'

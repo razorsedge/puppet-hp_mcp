@@ -21,10 +21,6 @@
 #   Start service at boot.
 #   Default: true
 #
-# [*libz_fix*]
-#   Whether to implement a workaround for a faulty hpsmh package %pre script.
-#   Default: auto-set, platform specific
-#
 # [*admin_group*]
 #   List of OS users to put in the SMH admin group, separated by semicolons.
 #   Default: empty
@@ -156,7 +152,6 @@ class hp_mcp::hpsmh (
   $autoupgrade            = false,
   $service_ensure         = 'running',
   $service_enable         = true,
-  $libz_fix               = $hp_mcp::params::libz_fix,
   $admin_group            = '',
   $operator_group         = '',
   $user_group             = '',
@@ -236,14 +231,8 @@ class hp_mcp::hpsmh (
 #        require => Package['hp-snmp-agents'],
       }
 
-      # HP PSP 8.62 on CentOS 6 has an error in the install scripts.
-      file { '/usr/lib/libz.so.1':
-        ensure => $libz_fix,
-      }
-
       package { 'hpsmh':
         ensure  => $package_ensure,
-        require => File['/usr/lib/libz.so.1'],
       }
 
       # TODO: Figure out some dynamic way to use hpsmh-cert-host1
