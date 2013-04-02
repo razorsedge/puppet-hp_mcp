@@ -48,7 +48,8 @@ class hp_mcp (
   $yum_server     = $hp_mcp::params::yum_server,
   $yum_path       = $hp_mcp::params::yum_path,
   $gpg_path       = $hp_mcp::params::gpg_path,
-  $mcp_version    = $hp_mcp::params::mcp_version
+  $mcp_version    = $hp_mcp::params::mcp_version,
+  $manage_snmp    = true
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
@@ -101,6 +102,7 @@ class hp_mcp (
         service_ensure        => $service_ensure,
         service_enable        => $service_enable,
         cmalocalhostrwcommstr => '',
+        manage_snmp           => $manage_snmp,
       } ->
       class { 'hp_mcp::hpsmh':
         ensure         => $ensure,
