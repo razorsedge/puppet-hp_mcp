@@ -9,4 +9,6 @@
 # Learn more about module testing here:
 #  http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-include hp_mcp
+class { 'hp_mcp':
+  cmalocalhostrwcommstr => 'SomeSecureString',
+}
