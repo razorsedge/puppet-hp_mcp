@@ -51,6 +51,9 @@ class hp_mcp::hphealth (
   $service_ensure = 'running',
   $service_enable = true
 ) inherits hp_mcp::params {
+  # Validate our booleans
+  validate_bool($autoupgrade)
+  validate_bool($service_enable)
 
   case $ensure {
     /(present)/: {
