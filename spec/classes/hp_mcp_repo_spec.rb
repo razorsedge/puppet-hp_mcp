@@ -34,7 +34,7 @@ describe 'hp_mcp::repo', :type => 'class' do
   end
 
   context 'on a supported operatingsystem, HP platform, default parameters' do
-    redhatish.each do |os|
+    (['CentOS']).each do |os|
       context "for operatingsystem #{os}" do
         let(:params) {{}}
         let :facts do {
@@ -47,7 +47,26 @@ describe 'hp_mcp::repo', :type => 'class' do
           :enabled  => '1',
           :gpgcheck => '1',
           :gpgkey   => 'http://downloads.linux.hp.com/SDR/downloads/ManagementComponentPack/GPG-KEY-ManagementComponentPack',
-          :baseurl  => "http://downloads.linux.hp.com/SDR/downloads/ManagementComponentPack/#{os}/$releasever/$basearch/current/",
+          :baseurl  => 'http://downloads.linux.hp.com/SDR/downloads/ManagementComponentPack/CentOS/$releasever/$basearch/current/',
+          :priority => '50',
+          :protect  => '0'
+        )}
+      end
+    end
+    (['OracleLinux', 'OEL']).each do |os|
+      context "for operatingsystem #{os}" do
+        let(:params) {{}}
+        let :facts do {
+          :operatingsystem => os,
+          :manufacturer    => 'HP'
+        }
+        end
+        it { should contain_yumrepo('HP-mcp').with(
+          :descr    => 'HP Software Delivery Repository for Management Component Pack',
+          :enabled  => '1',
+          :gpgcheck => '1',
+          :gpgkey   => 'http://downloads.linux.hp.com/SDR/downloads/ManagementComponentPack/GPG-KEY-ManagementComponentPack',
+          :baseurl  => 'http://downloads.linux.hp.com/SDR/downloads/ManagementComponentPack/Oracle/$releasever/$basearch/current/',
           :priority => '50',
           :protect  => '0'
         )}
