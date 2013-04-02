@@ -8,7 +8,7 @@ Introduction
 ------------
 
 This module manages the installation of the hardware monitoring aspects of the HP
-[Proliant Support Pack](http://h18004.www1.hp.com/products/servers/linux/linuxcommunity/index.html)
+[Management Component Pack](http://h18004.www1.hp.com/products/servers/linux/linuxcommunity/index.html)
 from the [Software Delivery Repository](http://downloads.linux.hp.com/SDR/).  It
 does not support the HP kernel drivers.
 
