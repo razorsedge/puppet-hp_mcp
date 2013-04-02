@@ -18,15 +18,14 @@ Actions:
 
 * Installs the MCP YUM repository.
 * Installs the HP Health packages and services.
-* Installs the HP Systems Management Homepage packages, service, and configuration.
 * Installs the HP SNMP Agent package, service, and configuration.
+* Installs the HP Systems Management Homepage packages, service, and configuration.
 
 OS Support:
 
-* CentOS       - tested on CentOS 6.3
+* CentOS       - tested on CentOS 6.4
 * Oracle Linux - supported but untested
 * Asianux      - presently unsupported (patches welcome)
-* Fedora       - presently unsupported (patches welcome)
 * Ubuntu       - presently unsupported (patches welcome)
 
 Class documentation is available via puppetdoc.
@@ -35,20 +34,14 @@ Examples
 --------
 
       # Parameterized Class:
-      class { 'snmp': }
       class { 'hp_mcp':
-        smh_gid => '1001',
-        smh_uid => '1001',
         cmalocalhostrwcommstr => 'SomeSecureString',
       }
-
-      # Include only on HP ProLiant Gen8 or newer platforms.
-      class { 'hp_mcp::hpams': }
 
 Notes
 -----
 
-* Only tested on CentOS 6.3 x86_64 on a HP DL140 G2.
+* Only tested on CentOS 6.4 x86_64 on a HP DL360 G5.
 
 Issues
 ------
