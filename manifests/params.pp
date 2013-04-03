@@ -117,8 +117,7 @@ class hp_mcp::params {
         }
       }
     }
-    default: {
-      fail("Module ${::module} is not supported on ${::operatingsystem}")
-    }
+    # If we are not on a supported OS, do not do anything.
+    default: { }
   }
 }

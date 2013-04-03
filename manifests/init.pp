@@ -69,48 +69,54 @@ class hp_mcp (
 
   case $::manufacturer {
     'HP': {
-      @group { 'hpsmh':
-        ensure => $user_ensure,
-        gid    => $smh_gid,
-      }
+      case $::operatingsystem {
+        'CentOS', 'OEL', 'OracleLinux': {
+          @group { 'hpsmh':
+            ensure => $user_ensure,
+            gid    => $smh_gid,
+          }
 
-      @user { 'hpsmh':
-        ensure => $user_ensure,
-        uid    => $smh_uid,
-        gid    => 'hpsmh',
-        home   => '/opt/hp/hpsmh',
-        shell  => '/sbin/nologin',
-      }
+          @user { 'hpsmh':
+            ensure => $user_ensure,
+            uid    => $smh_uid,
+            gid    => 'hpsmh',
+            home   => '/opt/hp/hpsmh',
+            shell  => '/sbin/nologin',
+          }
 
-      anchor { 'hp_mcp::begin': } ->
-      class { 'hp_mcp::repo':
-        ensure      => $ensure,
-        yum_server  => $yum_server,
-        yum_path    => $yum_path,
-        gpg_path    => $gpg_path,
-        mcp_version => $mcp_version,
-      } ->
-      class { 'hp_mcp::hphealth':
-        ensure         => $ensure,
-        autoupgrade    => $autoupgrade,
-        service_ensure => $service_ensure,
-        service_enable => $service_enable,
-      } ->
-      class { 'hp_mcp::hpsnmp':
-        ensure                => $ensure,
-        autoupgrade           => $autoupgrade,
-        service_ensure        => $service_ensure,
-        service_enable        => $service_enable,
-        cmalocalhostrwcommstr => '',
-        manage_snmp           => $manage_snmp,
-      } ->
-      class { 'hp_mcp::hpsmh':
-        ensure         => $ensure,
-        autoupgrade    => $autoupgrade,
-        service_ensure => $service_ensure,
-        service_enable => $service_enable,
-      } ->
-      anchor { 'hp_mcp::end': }
+          anchor { 'hp_mcp::begin': } ->
+          class { 'hp_mcp::repo':
+            ensure      => $ensure,
+            yum_server  => $yum_server,
+            yum_path    => $yum_path,
+            gpg_path    => $gpg_path,
+            mcp_version => $mcp_version,
+          } ->
+          class { 'hp_mcp::hphealth':
+            ensure         => $ensure,
+            autoupgrade    => $autoupgrade,
+            service_ensure => $service_ensure,
+            service_enable => $service_enable,
+          } ->
+          class { 'hp_mcp::hpsnmp':
+            ensure                => $ensure,
+            autoupgrade           => $autoupgrade,
+            service_ensure        => $service_ensure,
+            service_enable        => $service_enable,
+            cmalocalhostrwcommstr => '',
+            manage_snmp           => $manage_snmp,
+          } ->
+          class { 'hp_mcp::hpsmh':
+            ensure         => $ensure,
+            autoupgrade    => $autoupgrade,
+            service_ensure => $service_ensure,
+            service_enable => $service_enable,
+          } ->
+          anchor { 'hp_mcp::end': }
+        }
+        # If we are not on a supported OS, do not do anything.
+        default: { }
+      }
     }
     # If we are not on HP hardware, do not do anything.
     default: { }
