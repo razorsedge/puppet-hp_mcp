@@ -157,7 +157,7 @@ class hp_mcp::hpsnmp (
         mode    => '0755',
         owner   => 'root',
         group   => 'root',
-        source  => template('hp_mcp/cma.conf.erb'),
+        content => template('hp_mcp/cma.conf.erb'),
         require => Package['hp-snmp-agents'],
         notify  => Service['hp-snmp-agents'],
       }
