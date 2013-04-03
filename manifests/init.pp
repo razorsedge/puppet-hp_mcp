@@ -16,10 +16,14 @@
 #   The user ID of the SMH user.
 #   Default: 490
 #
+# [*install_smh*]
+#   Whether to install the HP System Management Homepage.
+#   Default: true
+#
 # === Actions:
 #
 # Wraps the installation of all HP MCP subcomponents except for the Agentless
-# Monitoring Service.
+# Monitoring Service.  Do not call this class if you just want AMS.
 #
 # === Requires:
 #
@@ -55,11 +59,14 @@ class hp_mcp (
   $cmamgmtstationroipordns   = '',
   $cmatrapdestinationcommstr = '',
   $cmatrapdestinationipordns = '',
-  $manage_snmp               = true
+  $manage_snmp               = true,
+  $install_smh               = true
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
   validate_bool($service_enable)
+  validate_bool($manage_snmp)
+  validate_bool($install_smh)
 
   case $ensure {
     /(present)/: {
@@ -90,20 +97,22 @@ class hp_mcp (
             shell  => '/sbin/nologin',
           }
 
-          anchor { 'hp_mcp::begin': } ->
+          anchor { 'hp_mcp::begin': }
+          anchor { 'hp_mcp::end': }
+
           class { 'hp_mcp::repo':
             ensure      => $ensure,
             yum_server  => $yum_server,
             yum_path    => $yum_path,
             gpg_path    => $gpg_path,
             mcp_version => $mcp_version,
-          } ->
+          }
           class { 'hp_mcp::hphealth':
             ensure         => $ensure,
             autoupgrade    => $autoupgrade,
             service_ensure => $service_ensure,
             service_enable => $service_enable,
-          } ->
+          }
           class { 'hp_mcp::hpsnmp':
             ensure                    => $ensure,
             autoupgrade               => $autoupgrade,
@@ -117,14 +126,27 @@ class hp_mcp (
             cmatrapdestinationcommstr => $cmatrapdestinationcommstr,
             cmatrapdestinationipordns => $cmatrapdestinationipordns,
             manage_snmp               => $manage_snmp,
-          } ->
-          class { 'hp_mcp::hpsmh':
-            ensure         => $ensure,
-            autoupgrade    => $autoupgrade,
-            service_ensure => $service_ensure,
-            service_enable => $service_enable,
-          } ->
-          anchor { 'hp_mcp::end': }
+          }
+          if $install_smh {
+            class { 'hp_mcp::hpsmh':
+              ensure         => $ensure,
+              autoupgrade    => $autoupgrade,
+              service_ensure => $service_ensure,
+              service_enable => $service_enable,
+            }
+            Anchor['hp_mcp::begin'] ->
+            Class['hp_mcp::repo'] ->
+            Class['hp_mcp::hphealth'] ->
+            Class['hp_mcp::hpsnmp'] ->
+            Class['hp_mcp::hpsmh'] ->
+            Anchor['hp_mcp::end']
+          } else {
+            Anchor['hp_mcp::begin'] ->
+            Class['hp_mcp::repo'] ->
+            Class['hp_mcp::hphealth'] ->
+            Class['hp_mcp::hpsnmp'] ->
+            Anchor['hp_mcp::end']
+          }
         }
         # If we are not on a supported OS, do not do anything.
         default: { }
