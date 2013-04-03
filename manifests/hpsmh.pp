@@ -173,7 +173,7 @@ class hp_mcp::hpsmh (
   $box_order              = 'status',
   $box_item_order         = 'status',
   $session_timeout        = 15,
-  $ui_timeout             = 20,
+  $ui_timeout             = 120,
   $httpd_error_log        = 'false',
   $multihomed             = '',
   $rotate_logs_size       = 5
@@ -218,17 +218,20 @@ class hp_mcp::hpsmh (
 
       package { 'cpqacuxe':
         ensure => $package_ensure,
+        notify => Service['hpsmhd'],
       }
 
       package { 'hpdiags':
         ensure  => $package_ensure,
         require => Package['hpsmh'],
+        notify  => Service['hpsmhd'],
       }
 
       package { 'hp-smh-templates':
         ensure  => $package_ensure,
         require => Package['hpsmh'],
 #        require => Package['hp-snmp-agents'],
+        notify  => Service['hpsmhd'],
       }
 
       package { 'hpsmh':
