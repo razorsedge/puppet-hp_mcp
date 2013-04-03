@@ -5,10 +5,6 @@
 #
 # === Parameters:
 #
-# [*cmalocalhostrwcommstr*]
-#   Community string for Compaq Management Agents to talk to the SNMP server.
-#   Default: none
-#
 # [*ensure*]
 #   Ensure if present or absent.
 #   Default: present
@@ -25,6 +21,38 @@
 #   Start service at boot.
 #   Default: true
 #
+# [*cmasyscontact*]
+#   The value for the SNMP system contact.
+#   Default: none
+#
+# [*cmasyslocation*]
+#   The value for the SNMP system location.
+#   Default: none
+#
+# [*cmalocalhostrwcommstr*]
+#   Community string for Compaq Management Agents to talk to the SNMP server.
+#   Default: none
+#
+# [*cmamgmtstationrocommstr*]
+#   Community string for HP SIM to talk to the SNMP server.
+#   Default: none
+#
+# [*cmamgmtstationroipordns*]
+#   IP(s) or hostname(s) of the HP SIM server(s).
+#   Default: none
+#
+# [*cmatrapdestinationcommstr*]
+#   Community string for the SNMP server to talk to HP SIM.
+#   Default: none
+#
+# [*cmatrapdestinationipordns*]
+#   IP(s) or hostname(s) of the HP SIM server(s).
+#   Default: none
+#
+# [*manage_snmp*]
+#   Whether to allow this module to manage the SNMP installation.
+#   Default: true
+#
 # === Actions:
 #
 # Installs and configures the HP SNMP Agents.
@@ -32,14 +60,9 @@
 #
 # === Requires:
 #
-# $cmalocalhostrwcommstr
 # Class['hp_mcp']
 # Class['hp_mcp::repo']
 # Class['hp_mcp::hphealth']
-#
-# === Sample Usage:
-#
-#   class { 'hp_mcp::hpsnmp': }
 #
 # === Authors:
 #
@@ -50,17 +73,17 @@
 # Copyright (C) 2013 Mike Arnold, unless otherwise noted.
 #
 class hp_mcp::hpsnmp (
-  $cmalocalhostrwcommstr,
-  $cmasyscontact             = '',
-  $cmasyslocation            = '',
-  $cmamgmtstationrocommstr   = '',
-  $cmamgmtstationroipordns   = '',
-  $cmatrapdestinationcommstr = '',
-  $cmatrapdestinationipordns = '',
   $ensure                    = 'present',
   $autoupgrade               = false,
   $service_ensure            = 'running',
   $service_enable            = true,
+  $cmasyscontact             = '',
+  $cmasyslocation            = '',
+  $cmalocalhostrwcommstr     = '',
+  $cmamgmtstationrocommstr   = '',
+  $cmamgmtstationroipordns   = '',
+  $cmatrapdestinationcommstr = '',
+  $cmatrapdestinationipordns = '',
   $manage_snmp               = true
 ) inherits hp_mcp::params {
   # Validate our booleans
@@ -129,9 +152,9 @@ class hp_mcp::hpsnmp (
           command     => '/sbin/hpsnmpconfig',
           environment => [
             'CMASILENT=yes',
-            "CMALOCALHOSTRWCOMMSTR=${cmalocalhostrwcommstr}",
             "CMASYSCONTACT=${cmasyscontact}",
             "CMASYSLOCATION=${cmasyslocation}",
+            "CMALOCALHOSTRWCOMMSTR=${cmalocalhostrwcommstr}",
             "CMAMGMTSTATIONROCOMMSTR=${cmamgmtstationrocommstr}",
             "CMAMGMTSTATIONROIPORDNS=${cmamgmtstationroipordns}",
             "CMATRAPDESTINATIONCOMMSTR=${cmatrapdestinationcommstr}",

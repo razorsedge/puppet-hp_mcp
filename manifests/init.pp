@@ -38,18 +38,24 @@
 # Copyright (C) 2013 Mike Arnold, unless otherwise noted.
 #
 class hp_mcp (
-  $cmalocalhostrwcommstr,
-  $ensure         = $hp_mcp::params::ensure,
-  $autoupgrade    = $hp_mcp::params::safe_autoupgrade,
-  $service_ensure = $hp_mcp::params::service_ensure,
-  $service_enable = $hp_mcp::params::safe_service_enable,
-  $smh_gid        = $hp_mcp::params::gid,
-  $smh_uid        = $hp_mcp::params::uid,
-  $yum_server     = $hp_mcp::params::yum_server,
-  $yum_path       = $hp_mcp::params::yum_path,
-  $gpg_path       = $hp_mcp::params::gpg_path,
-  $mcp_version    = $hp_mcp::params::mcp_version,
-  $manage_snmp    = true
+  $ensure                    = $hp_mcp::params::ensure,
+  $autoupgrade               = $hp_mcp::params::safe_autoupgrade,
+  $service_ensure            = $hp_mcp::params::service_ensure,
+  $service_enable            = $hp_mcp::params::safe_service_enable,
+  $smh_gid                   = $hp_mcp::params::gid,
+  $smh_uid                   = $hp_mcp::params::uid,
+  $yum_server                = $hp_mcp::params::yum_server,
+  $yum_path                  = $hp_mcp::params::yum_path,
+  $gpg_path                  = $hp_mcp::params::gpg_path,
+  $mcp_version               = $hp_mcp::params::mcp_version,
+  $cmasyscontact             = '',
+  $cmasyslocation            = '',
+  $cmalocalhostrwcommstr     = '',
+  $cmamgmtstationrocommstr   = '',
+  $cmamgmtstationroipordns   = '',
+  $cmatrapdestinationcommstr = '',
+  $cmatrapdestinationipordns = '',
+  $manage_snmp               = true
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
@@ -99,12 +105,18 @@ class hp_mcp (
             service_enable => $service_enable,
           } ->
           class { 'hp_mcp::hpsnmp':
-            ensure                => $ensure,
-            autoupgrade           => $autoupgrade,
-            service_ensure        => $service_ensure,
-            service_enable        => $service_enable,
-            cmalocalhostrwcommstr => '',
-            manage_snmp           => $manage_snmp,
+            ensure                    => $ensure,
+            autoupgrade               => $autoupgrade,
+            service_ensure            => $service_ensure,
+            service_enable            => $service_enable,
+            cmasyscontact             => $cmasyscontact,
+            cmasyslocation            => $cmasyslocation,
+            cmalocalhostrwcommstr     => $cmalocalhostrwcommstr,
+            cmamgmtstationrocommstr   => $cmamgmtstationrocommstr,
+            cmamgmtstationroipordns   => $cmamgmtstationroipordns,
+            cmatrapdestinationcommstr => $cmatrapdestinationcommstr,
+            cmatrapdestinationipordns => $cmatrapdestinationipordns,
+            manage_snmp               => $manage_snmp,
           } ->
           class { 'hp_mcp::hpsmh':
             ensure         => $ensure,
