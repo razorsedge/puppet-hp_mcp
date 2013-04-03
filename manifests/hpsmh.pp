@@ -110,7 +110,7 @@
 #
 # [*ui_timeout*]
 #   ?
-#   Default: 20
+#   Default: 120
 #
 # [*httpd_error_log*]
 #   ?
@@ -133,11 +133,8 @@
 # === Requires:
 #
 # Class['hp_mcp']
+# Class['hp_mcp::repo']
 # Class['hp_mcp::hpsnmp']
-#
-# === Sample Usage:
-#
-#   class { 'hp_mcp::hpsmh': }
 #
 # === Authors:
 #

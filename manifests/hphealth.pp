@@ -31,11 +31,7 @@
 #
 # === Requires:
 #
-# Class['hp_mcp']
-#
-# === Sample Usage:
-#
-#   class { 'hp_mcp::hphealth': }
+# Class['hp_mcp::repo']
 #
 # === Authors:
 #
