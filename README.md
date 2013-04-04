@@ -33,9 +33,17 @@ Class documentation is available via puppetdoc.
 Examples
 --------
 
+      include hp_spp
+
       # Parameterized Class:
-      class { 'hp_mcp':
-        cmalocalhostrwcommstr => 'SomeSecureString',
+      class { 'hp_spp':
+        install_smh               => true,
+        smh_gid                   => 1000,
+        smh_uid                   => 2000,
+        cmamgmtstationrocommstr   => 'community',
+        cmamgmtstationroipordns   => 'hpsim.example.com workstation.example.com',
+        cmatrapdestinationcommstr => 'public',
+        cmatrapdestinationipordns => 'hpsim.example.com',
       }
 
 Notes
