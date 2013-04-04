@@ -1,5 +1,6 @@
 fixtures:
-#  repositories:
-#    stdlib: git://github.com/puppetlabs/puppetlabs-stdlib.git
+  repositories:
+    stdlib: git://github.com/puppetlabs/puppetlabs-stdlib.git
+    snmp: git://github.com/razorsedge/puppet-snmp.git
   symlinks:
     hp_mcp: "#{source_dir}"

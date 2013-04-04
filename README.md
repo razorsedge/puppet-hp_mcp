@@ -1,5 +1,5 @@
-hp_mcp Module
-===============
+Puppet HP Management Component Pack Module
+==========================================
 
 master branch: [![Build Status](https://secure.travis-ci.org/razorsedge/puppet-hp_mcp.png?branch=master)](http://travis-ci.org/razorsedge/puppet-hp_mcp)
 develop branch: [![Build Status](https://secure.travis-ci.org/razorsedge/puppet-hp_mcp.png?branch=develop)](http://travis-ci.org/razorsedge/puppet-hp_mcp)
@@ -7,30 +7,49 @@ develop branch: [![Build Status](https://secure.travis-ci.org/razorsedge/puppet-
 Introduction
 ------------
 
-This module ....
+This module manages the installation of the hardware monitoring aspects of the HP
+[Management Component Pack](http://h18004.www1.hp.com/products/servers/linux/linuxcommunity/index.html)
+from the [Software Delivery Repository](http://downloads.linux.hp.com/SDR/).  It
+does not support the HP kernel drivers.
+
+This module currently only works on CentOS and Oracle Linux distributions.
 
 Actions:
 
-* None
+* Installs the MCP YUM repository.
+* Installs the HP Health packages and services.
+* Installs the HP SNMP Agent package, service, and configuration.
+* Installs the HP Systems Management Homepage packages, service, and configuration.
 
 OS Support:
 
-* RedHat family - tested on CentOS 5.5+ and CentOS 6.2+
-* SuSE family   - presently unsupported (patches welcome)
-* Debian family - presently unsupported (patches welcome)
+* CentOS       - tested on CentOS 6.4
+* Oracle Linux - supported but untested
+* Asianux      - presently unsupported (patches welcome)
+* Ubuntu       - presently unsupported (patches welcome)
 
 Class documentation is available via puppetdoc.
 
 Examples
 --------
 
-    include 'hp_mcp'
+      include hp_spp
 
+      # Parameterized Class:
+      class { 'hp_spp':
+        install_smh               => true,
+        smh_gid                   => 1000,
+        smh_uid                   => 2000,
+        cmamgmtstationrocommstr   => 'community',
+        cmamgmtstationroipordns   => 'hpsim.example.com workstation.example.com',
+        cmatrapdestinationcommstr => 'public',
+        cmatrapdestinationipordns => 'hpsim.example.com',
+      }
 
 Notes
 -----
 
-* None
+* Only tested on CentOS 6.4 x86_64 on a HP DL360 G5.
 
 Issues
 ------
