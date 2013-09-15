@@ -33,10 +33,10 @@ Class documentation is available via puppetdoc.
 Examples
 --------
 
-      include hp_spp
+      include hp_mcp
 
       # Parameterized Class:
-      class { 'hp_spp':
+      class { 'hp_mcp':
         install_smh               => true,
         smh_gid                   => 1000,
         smh_uid                   => 2000,
