@@ -5,7 +5,7 @@ author 'razorsedge'
 license 'Apache License, Version 2.0'
 project_page 'https://github.com/razorsedge/puppet-hp_mcp'
 source 'git://github.com/razorsedge/puppet-hp_mcp.git'
-summary 'Install and manage the HP Management Component Pack hardware monitoring installation.'
+summary 'HP Management Component Pack hardware monitoring installation and management.'
 description ''
 dependency 'puppetlabs/stdlib', '>=2.3.0'
 
