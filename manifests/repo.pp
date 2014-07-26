@@ -76,6 +76,13 @@ class hp_mcp::repo (
             priority => $hp_mcp::params::yum_priority,
             protect  => $hp_mcp::params::yum_protect,
           }
+
+          file { '/etc/yum.repos.d/HP-mcp.repo':
+            ensure => 'file',
+            owner  => 'root',
+            group  => 'root',
+            mode   => '0644',
+          }
         }
         default: { }
       }
