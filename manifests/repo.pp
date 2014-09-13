@@ -71,10 +71,17 @@ class hp_mcp::repo (
             descr    => 'HP Software Delivery Repository for Management Component Pack',
             enabled  => $enabled,
             gpgcheck => 1,
-            gpgkey   => "${yum_server}${gpg_path}GPG-KEY-ManagementComponentPack",
+            gpgkey   => "${yum_server}${gpg_path}GPG-KEY-mcp",
             baseurl  => "${yum_server}${yum_path}${mcp_version}/",
             priority => $hp_mcp::params::yum_priority,
             protect  => $hp_mcp::params::yum_protect,
+          }
+
+          file { '/etc/yum.repos.d/HP-mcp.repo':
+            ensure => 'file',
+            owner  => 'root',
+            group  => 'root',
+            mode   => '0644',
           }
         }
         default: { }

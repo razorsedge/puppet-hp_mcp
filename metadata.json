@@ -1,0 +1,37 @@
+{
+  "name": "razorsedge-hp_mcp",
+  "version": "0.1.0",
+  "author": "razorsedge",
+  "summary": "HP Management Component Pack hardware monitoring.",
+  "license": "Apache License, Version 2.0",
+  "project_page": "https://github.com/razorsedge/puppet-hp_mcp",
+  "issues_url": "https://github.com/razorsedge/puppet-hp_mcp/issues",
+  "tags": [ "ProLiant", "CentOS", "OEL", "hardware", "HP" ],
+  "source": "https://github.com/razorsedge/puppet-hp_mcp.git",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=2.3.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [ "5", "6" ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [ "5", "6" ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">=2.7.20 <4.0.0"
+    }
+  ]
+}
