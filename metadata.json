@@ -2,10 +2,11 @@
   "name": "razorsedge-hp_mcp",
   "version": "0.0.1",
   "author": "razorsedge",
-  "summary": "Install and manage HP Management Component Pack hardware monitoring installation.",
-  "description": "UNKNOWN",
+  "summary": "HP Management Component Pack hardware monitoring.",
   "license": "Apache License, Version 2.0",
   "project_page": "https://github.com/razorsedge/puppet-hp_mcp",
+  "issues_url": "https://github.com/razorsedge/puppet-hp_mcp/issues",
+  "tags": [ "ProLiant", "CentOS", "OEL", "hardware", "HP" ],
   "source": "https://github.com/razorsedge/puppet-hp_mcp.git",
   "dependencies": [
     {
