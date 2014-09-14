@@ -71,7 +71,9 @@ class hp_mcp::repo (
             descr    => 'HP Software Delivery Repository for Management Component Pack',
             enabled  => $enabled,
             gpgcheck => 1,
-            gpgkey   => "${yum_server}${gpg_path}GPG-KEY-mcp",
+            # gpgkey has to be a string value with an indented second line
+            # per http://projects.puppetlabs.com/issues/8867
+            gpgkey   => "${yum_server}${gpg_path}hpPublicKey1024.pub\n    ${yum_server}${gpg_path}hpPublicKey2048.pub",
             baseurl  => "${yum_server}${yum_path}${mcp_version}/",
             priority => $hp_mcp::params::yum_priority,
             protect  => $hp_mcp::params::yum_protect,
