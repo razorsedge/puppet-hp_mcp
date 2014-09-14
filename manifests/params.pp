@@ -68,11 +68,11 @@ class hp_mcp::params {
     $safe_service_enable = $service_enable
   }
 
-  $gpg_path = '/SDR/downloads/ManagementComponentPack/'
+  $gpg_path = '/SDR/'
 
   case $::operatingsystem {
     'CentOS': {
-      $yum_path = '/SDR/downloads/ManagementComponentPack/CentOS/$releasever/$basearch/'
+      $yum_path = '/SDR/repo/mcp/CentOS/$releasever/$basearch/'
       case $::operatingsystemrelease {
         /^5.[0-2]$/: {
           $ipmi_package_name = 'hp-OpenIPMI'
@@ -95,7 +95,7 @@ class hp_mcp::params {
       }
     }
     'OracleLinux', 'OEL': {
-      $yum_path = '/SDR/downloads/ManagementComponentPack/Oracle/$releasever/$basearch/'
+      $yum_path = '/SDR/repo/mcp/Oracle/$releasever/$basearch/'
       case $::operatingsystemrelease {
         /^5.[0-2]$/: {
           $ipmi_package_name = 'hp-OpenIPMI'
