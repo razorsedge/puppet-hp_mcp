@@ -77,13 +77,13 @@ class hp_mcp::hpsnmp (
   $autoupgrade               = false,
   $service_ensure            = 'running',
   $service_enable            = true,
-  $cmasyscontact             = '',
-  $cmasyslocation            = '',
-  $cmalocalhostrwcommstr     = '',
-  $cmamgmtstationrocommstr   = '',
-  $cmamgmtstationroipordns   = '',
-  $cmatrapdestinationcommstr = '',
-  $cmatrapdestinationipordns = '',
+  $cmasyscontact             = undef,
+  $cmasyslocation            = undef,
+  $cmalocalhostrwcommstr     = undef,
+  $cmamgmtstationrocommstr   = undef,
+  $cmamgmtstationroipordns   = undef,
+  $cmatrapdestinationcommstr = undef,
+  $cmatrapdestinationipordns = undef,
   $manage_snmp               = true
 ) inherits hp_mcp::params {
   # Validate our booleans
