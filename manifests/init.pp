@@ -100,20 +100,20 @@ class hp_mcp (
           anchor { 'hp_mcp::begin': }
           anchor { 'hp_mcp::end': }
 
-          class { 'hp_mcp::repo':
+          class { '::hp_mcp::repo':
             ensure      => $ensure,
             yum_server  => $yum_server,
             yum_path    => $yum_path,
             gpg_path    => $gpg_path,
             mcp_version => $mcp_version,
           }
-          class { 'hp_mcp::hphealth':
+          class { '::hp_mcp::hphealth':
             ensure         => $ensure,
             autoupgrade    => $autoupgrade,
             service_ensure => $service_ensure,
             service_enable => $service_enable,
           }
-          class { 'hp_mcp::hpsnmp':
+          class { '::hp_mcp::hpsnmp':
             ensure                    => $ensure,
             autoupgrade               => $autoupgrade,
             service_ensure            => $service_ensure,
@@ -128,7 +128,7 @@ class hp_mcp (
             manage_snmp               => $manage_snmp,
           }
           if $install_smh {
-            class { 'hp_mcp::hpsmh':
+            class { '::hp_mcp::hpsmh':
               ensure         => $ensure,
               autoupgrade    => $autoupgrade,
               service_ensure => $service_ensure,
