@@ -213,9 +213,11 @@ class hp_mcp::hpsmh (
       realize Group['hpsmh']
       realize User['hpsmh']
 
-      package { 'cpqacuxe':
-        ensure => $package_ensure,
-        notify => Service['hpsmhd'],
+      if $hp_mcp::params::arrayweb_package_name {
+        package { $hp_mcp::params::arrayweb_package_name:
+          ensure => $package_ensure,
+          notify => Service['hpsmhd'],
+        }
       }
 
       package { 'hpdiags':
