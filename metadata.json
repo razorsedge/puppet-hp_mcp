@@ -7,7 +7,7 @@
   "project_page": "https://github.com/razorsedge/puppet-hp_mcp",
   "issues_url": "https://github.com/razorsedge/puppet-hp_mcp/issues",
   "source": "https://github.com/razorsedge/puppet-hp_mcp.git",
-  "tags": [ "ProLiant", "CentOS", "OEL", "hardware", "HP", "psp" ],
+  "tags": [ "HP", "ProLiant", "hardware", "mcp", "psp" ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
