@@ -32,6 +32,7 @@ describe 'hp_mcp::hphealth', :type => 'class' do
         it { should_not contain_package('hponcfg') }
         it { should_not contain_package('hp-health') }
         it { should_not contain_package('hpacucli') }
+        it { should_not contain_package('hpssacli') }
         it { should_not contain_package('hp-ilo') }
         it { should_not contain_service('hp-ilo') }
         it { should_not contain_service('hp-health') }
@@ -50,7 +51,6 @@ describe 'hp_mcp::hphealth', :type => 'class' do
         it { should contain_package('hponcfg').with_ensure('present') }
         it { should contain_package('libxslt').with_ensure('present') }
         it { should contain_package('hp-health').with_ensure('present') }
-        it { should contain_package('hpacucli').with_ensure('present') }
         it { should contain_service('hp-health').with_ensure('running') }
 
         context "for operatingsystemrelease 5.0" do
@@ -80,7 +80,7 @@ describe 'hp_mcp::hphealth', :type => 'class' do
             :name   => 'hp-OpenIPMI'
           )}
           it { should contain_package('hp-ilo').with_ensure('absent') }
-          it { should contain_service('hp-ilo').with_ensure('') }
+          it { should contain_service('hp-ilo').with_ensure(nil) }
         end
 
         context "for operatingsystemrelease 5.10" do
@@ -95,22 +95,41 @@ describe 'hp_mcp::hphealth', :type => 'class' do
             :name   => 'OpenIPMI'
           )}
           it { should contain_package('hp-ilo').with_ensure('absent') }
-          it { should contain_service('hp-ilo').with_ensure('') }
+          it { should contain_service('hp-ilo').with_ensure(nil) }
         end
 
         context "for operatingsystemrelease 6.0" do
-          let :facts do { 
+          let :facts do {
             :operatingsystem        => os,
             :operatingsystemrelease => '6.0',
             :manufacturer           => 'HP'
-          } 
+          }
           end
           it { should contain_package('hp-OpenIPMI').with(
             :ensure => 'present',
             :name   => 'OpenIPMI'
           )}
-          it { should contain_package('hp-ilo').with_ensure('absent') } 
-          it { should contain_service('hp-ilo').with_ensure('') } 
+          it { should contain_package('hpacucli').with_ensure('present') }
+          it { should_not contain_package('hpssacli') }
+          it { should contain_package('hp-ilo').with_ensure('absent') }
+          it { should contain_service('hp-ilo').with_ensure(nil) }
+        end
+
+        context "for operatingsystemrelease 7.0" do
+          let :facts do {
+            :operatingsystem        => os,
+            :operatingsystemrelease => '7.0',
+            :manufacturer           => 'HP'
+          }
+          end
+          it { should contain_package('hp-OpenIPMI').with(
+            :ensure => 'present',
+            :name   => 'OpenIPMI'
+          )}
+          it { should_not contain_package('hpacucli') }
+          it { should contain_package('hpssacli').with_ensure('present') }
+          it { should contain_package('hp-ilo').with_ensure('absent') }
+          it { should contain_service('hp-ilo').with_ensure(nil) }
         end
       end
     end
@@ -139,7 +158,7 @@ describe 'hp_mcp::hphealth', :type => 'class' do
         it { should contain_package('hp-health').with_ensure('latest') }
         it { should contain_package('hpacucli').with_ensure('latest') }
         it { should contain_package('hp-ilo').with_ensure('absent') }
-        it { should contain_service('hp-ilo').with_ensure('') }
+        it { should contain_service('hp-ilo').with_ensure(nil) }
         it { should contain_service('hp-health').with_ensure('stopped') }
       end
     end
