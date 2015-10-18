@@ -46,10 +46,10 @@ describe 'hp_mcp::repo', :type => 'class' do
           :descr    => 'HP Software Delivery Repository for Management Component Pack',
           :enabled  => '1',
           :gpgcheck => '1',
-          :gpgkey   => 'http://downloads.linux.hp.com/SDR/hpPublicKey1024.pub
-    http://downloads.linux.hp.com/SDR/hpPublicKey2048.pub
-    http://downloads.linux.hp.com/SDR/hpPublicKey2048_key1.pub',
-          :baseurl  => 'http://downloads.linux.hp.com/SDR/repo/mcp/CentOS/$releasever/$basearch/current/',
+          :gpgkey   => 'http://downloads.linux.hpe.com/SDR/hpPublicKey1024.pub
+    http://downloads.linux.hpe.com/SDR/hpPublicKey2048.pub
+    http://downloads.linux.hpe.com/SDR/hpPublicKey2048_key1.pub',
+          :baseurl  => 'http://downloads.linux.hpe.com/SDR/repo/mcp/CentOS/$releasever/$basearch/current/',
           :priority => '50',
           :protect  => '0'
         )}
@@ -67,10 +67,10 @@ describe 'hp_mcp::repo', :type => 'class' do
           :descr    => 'HP Software Delivery Repository for Management Component Pack',
           :enabled  => '1',
           :gpgcheck => '1',
-          :gpgkey   => 'http://downloads.linux.hp.com/SDR/hpPublicKey1024.pub
-    http://downloads.linux.hp.com/SDR/hpPublicKey2048.pub
-    http://downloads.linux.hp.com/SDR/hpPublicKey2048_key1.pub',
-          :baseurl  => 'http://downloads.linux.hp.com/SDR/repo/mcp/Oracle/$releasever/$basearch/current/',
+          :gpgkey   => 'http://downloads.linux.hpe.com/SDR/hpPublicKey1024.pub
+    http://downloads.linux.hpe.com/SDR/hpPublicKey2048.pub
+    http://downloads.linux.hpe.com/SDR/hpPublicKey2048_key1.pub',
+          :baseurl  => 'http://downloads.linux.hpe.com/SDR/repo/mcp/Oracle/$releasever/$basearch/current/',
           :priority => '50',
           :protect  => '0'
         )}
