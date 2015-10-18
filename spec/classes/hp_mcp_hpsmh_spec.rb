@@ -107,8 +107,8 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
-        it { should contain_package('cpqacuxe').with_ensure('present') }
-        it { should_not contain_package('hpssa') }
+        it { should_not contain_package('cpqacuxe') }
+        it { should contain_package('hpssa').with_ensure('present') }
         it { should contain_package('hpdiags').with_ensure('present') }
         it { should contain_package('hp-smh-templates').with_ensure('present') }
         it { should contain_package('hpsmh').with_ensure('present') }
@@ -247,7 +247,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
-        it { should contain_package('cpqacuxe').with_ensure('latest') }
+        it { should contain_package('hpssa').with_ensure('latest') }
         it { should contain_package('hpdiags').with_ensure('latest') }
         it { should contain_package('hp-smh-templates').with_ensure('latest') }
         it { should contain_package('hpsmh').with_ensure('latest') }

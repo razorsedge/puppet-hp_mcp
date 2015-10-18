@@ -94,15 +94,11 @@ class hp_mcp::params {
         }
       }
       case $::operatingsystemrelease {
-        /^6/: {
-          $arrayweb_package_name = 'cpqacuxe'
-          $arraycli_package_name = 'hpacucli'
-        }
-        /^7/: {
+        /^5/: { }
+        default: {
           $arrayweb_package_name = 'hpssa'
           $arraycli_package_name = 'hpssacli'
         }
-        default: { }
       }
     }
     'OracleLinux', 'OEL': {
@@ -128,15 +124,15 @@ class hp_mcp::params {
         }
       }
       case $::operatingsystemrelease {
+        /^5/: { }
         /^6/: {
           $arrayweb_package_name = 'cpqacuxe'
           $arraycli_package_name = 'hpacucli'
         }
-        /^7/: {
+        default: {
           $arrayweb_package_name = 'hpssa'
           $arraycli_package_name = 'hpssacli'
         }
-        default: { }
       }
     }
     # If we are not on a supported OS, do not do anything.

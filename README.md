@@ -58,7 +58,7 @@ Notes
 Issues
 ------
 
-* None
+* HP YUM repositories are inconsistent between CentOS and Oracle.  The `current` link may point to version 10.10 on one OS and 9.50 on another.  Additionally, the hpacucli and cpqacuxe packages are missing in the EL5 9.50 repo while they are present in the 9.40 repo.
 
 TODO
 ----
