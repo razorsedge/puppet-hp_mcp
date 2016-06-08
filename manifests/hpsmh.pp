@@ -124,6 +124,11 @@
 #   ?
 #   Default: 5
 #
+# [*install_old_acu_tools*]
+#   Whether to install the old HP Array Configuration Utilities (hpacucli and
+#   cpqacuxe).
+#   Default: false
+#
 # === Actions:
 #
 # Installs and configures the HP System Management Homepage.
@@ -173,11 +178,13 @@ class hp_mcp::hpsmh (
   $ui_timeout             = 120,
   $httpd_error_log        = 'false', # lint:ignore:quoted_booleans
   $multihomed             = undef,
-  $rotate_logs_size       = 5
+  $rotate_logs_size       = 5,
+  $install_old_acu_tools  = false
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
   validate_bool($service_enable)
+  validate_bool($install_old_acu_tools)
 
   case $ensure {
     /(present)/: {
@@ -221,6 +228,13 @@ class hp_mcp::hpsmh (
           notify => Service['hpsmhd'],
         }
       }
+
+      if $install_old_acu_tools {
+        $hpacucli_package_ensure = $package_ensure
+      } else {
+        $hpacucli_package_ensure = 'absent'
+      }
+      ensure_packages('cpqacuxe', {ensure => $hpacucli_package_ensure})
 
       package { 'hpdiags':
         ensure  => $package_ensure,

@@ -16,8 +16,6 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
     end
   end
 
-  redhatish = ['CentOS', 'OracleLinux', 'OEL']
-
   context 'on a supported operatingsystem, non-HP platform' do
     (['CentOS']).each do |os|
       context "for operatingsystem #{os}" do
@@ -54,7 +52,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
-        it { should_not contain_package('cpqacuxe') }
+        it { should contain_package('cpqacuxe').with_ensure('absent') }
         it { should_not contain_package('hpssa') }
         it { should contain_package('hpdiags').with_ensure('present') }
         it { should contain_package('hp-smh-templates').with_ensure('present') }
@@ -107,7 +105,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
-        it { should_not contain_package('cpqacuxe') }
+        it { should contain_package('cpqacuxe').with_ensure('absent') }
         it { should contain_package('hpssa').with_ensure('present') }
         it { should contain_package('hpdiags').with_ensure('present') }
         it { should contain_package('hp-smh-templates').with_ensure('present') }
@@ -160,7 +158,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
-        it { should_not contain_package('cpqacuxe') }
+        it { should contain_package('cpqacuxe').with_ensure('absent') }
         it { should contain_package('hpssa').with_ensure('present') }
         it { should contain_package('hpdiags').with_ensure('present') }
         it { should contain_package('hp-smh-templates').with_ensure('present') }
@@ -235,7 +233,8 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
           :ui_timeout             => '5000',
           :httpd_error_log        => 'true',
           :multihomed             => 'true',
-          :rotate_logs_size       => '2000'
+          :rotate_logs_size       => '2000',
+          :install_old_acu_tools  => true
         }
         end
         let :facts do {
@@ -247,6 +246,7 @@ describe 'hp_mcp::hpsmh', :type => 'class' do
         end
         it { should contain_group('hpsmh').with_ensure('present').with_gid('490') }
         it { should contain_user('hpsmh').with_ensure('present').with_uid('490') }
+        it { should contain_package('cpqacuxe').with_ensure('latest') }
         it { should contain_package('hpssa').with_ensure('latest') }
         it { should contain_package('hpdiags').with_ensure('latest') }
         it { should contain_package('hp-smh-templates').with_ensure('latest') }

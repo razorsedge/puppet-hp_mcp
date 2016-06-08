@@ -20,6 +20,11 @@
 #   Whether to install the HP System Management Homepage.
 #   Default: true
 #
+# [*install_old_acu_tools*]
+#   Whether to install the old HP Array Configuration Utilities (hpacucli and
+#   cpqacuxe).
+#   Default: false
+#
 # === Actions:
 #
 # Wraps the installation of all HP MCP subcomponents except for the Agentless
@@ -60,13 +65,15 @@ class hp_mcp (
   $cmatrapdestinationcommstr = undef,
   $cmatrapdestinationipordns = undef,
   $manage_snmp               = true,
-  $install_smh               = true
+  $install_smh               = true,
+  $install_old_acu_tools     = false
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
   validate_bool($service_enable)
   validate_bool($manage_snmp)
   validate_bool($install_smh)
+  validate_bool($install_old_acu_tools)
 
   case $ensure {
     /(present)/: {
@@ -108,10 +115,11 @@ class hp_mcp (
             mcp_version => $mcp_version,
           }
           class { '::hp_mcp::hphealth':
-            ensure         => $ensure,
-            autoupgrade    => $autoupgrade,
-            service_ensure => $service_ensure,
-            service_enable => $service_enable,
+            ensure                => $ensure,
+            autoupgrade           => $autoupgrade,
+            service_ensure        => $service_ensure,
+            service_enable        => $service_enable,
+            install_old_acu_tools => $install_old_acu_tools,
           }
           class { '::hp_mcp::hpsnmp':
             ensure                    => $ensure,
@@ -129,10 +137,11 @@ class hp_mcp (
           }
           if $install_smh {
             class { '::hp_mcp::hpsmh':
-              ensure         => $ensure,
-              autoupgrade    => $autoupgrade,
-              service_ensure => $service_ensure,
-              service_enable => $service_enable,
+              ensure                => $ensure,
+              autoupgrade           => $autoupgrade,
+              service_ensure        => $service_ensure,
+              service_enable        => $service_enable,
+              install_old_acu_tools => $install_old_acu_tools,
             }
             Anchor['hp_mcp::begin'] ->
             Class['hp_mcp::repo'] ->

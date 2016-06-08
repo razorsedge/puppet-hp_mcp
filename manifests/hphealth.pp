@@ -21,6 +21,11 @@
 #   Start service at boot.
 #   Default: true
 #
+# [*install_old_acu_tools*]
+#   Whether to install the old HP Array Configuration Utilities (hpacucli and
+#   cpqacuxe).
+#   Default: false
+#
 # === Actions:
 #
 # Installs the HP System Health Application and Command Line Utilities.
@@ -42,14 +47,16 @@
 # Copyright (C) 2013 Mike Arnold, unless otherwise noted.
 #
 class hp_mcp::hphealth (
-  $ensure         = 'present',
-  $autoupgrade    = false,
-  $service_ensure = 'running',
-  $service_enable = true
+  $ensure                = 'present',
+  $autoupgrade           = false,
+  $service_ensure        = 'running',
+  $service_enable        = true,
+  $install_old_acu_tools = false
 ) inherits hp_mcp::params {
   # Validate our booleans
   validate_bool($autoupgrade)
   validate_bool($service_enable)
+  validate_bool($install_old_acu_tools)
 
   case $ensure {
     /(present)/: {
@@ -107,6 +114,13 @@ class hp_mcp::hphealth (
           ensure => $package_ensure,
         }
       }
+
+      if $install_old_acu_tools {
+        $hpacucli_package_ensure = $package_ensure
+      } else {
+        $hpacucli_package_ensure = 'absent'
+      }
+      ensure_packages('hpacucli', {ensure => $hpacucli_package_ensure})
 
       service { 'hp-health':
         ensure     => $service_ensure_real,
