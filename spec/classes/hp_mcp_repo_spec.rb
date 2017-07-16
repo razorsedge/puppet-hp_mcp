@@ -7,7 +7,8 @@ describe 'hp_mcp::repo', :type => 'class' do
   context 'on a non-supported operatingsystem' do
     let :facts do {
       :osfamily        => 'foo',
-      :operatingsystem => 'foo'
+      :operatingsystem => 'foo',
+      :operatingsystemrelease => '1'
     }
     end
     it 'should fail' do
@@ -25,6 +26,7 @@ describe 'hp_mcp::repo', :type => 'class' do
         let(:params) {{}}
         let :facts do {
           :operatingsystem => os,
+          :operatingsystemrelease => '6.0',
           :manufacturer    => 'foo'
         }
         end
@@ -39,6 +41,7 @@ describe 'hp_mcp::repo', :type => 'class' do
         let(:params) {{}}
         let :facts do {
           :operatingsystem => os,
+          :operatingsystemrelease => '6.0',
           :manufacturer    => 'HP'
         }
         end
@@ -60,6 +63,7 @@ describe 'hp_mcp::repo', :type => 'class' do
         let(:params) {{}}
         let :facts do {
           :operatingsystem => os,
+          :operatingsystemrelease => '6.0',
           :manufacturer    => 'HP'
         }
         end

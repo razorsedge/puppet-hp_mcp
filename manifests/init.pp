@@ -134,18 +134,18 @@ class hp_mcp (
               service_ensure => $service_ensure,
               service_enable => $service_enable,
             }
-            Anchor['hp_mcp::begin'] ->
-            Class['hp_mcp::repo'] ->
-            Class['hp_mcp::hphealth'] ->
-            Class['hp_mcp::hpsnmp'] ->
-            Class['hp_mcp::hpsmh'] ->
-            Anchor['hp_mcp::end']
+            Anchor['hp_mcp::begin']
+            -> Class['hp_mcp::repo']
+            -> Class['hp_mcp::hphealth']
+            -> Class['hp_mcp::hpsnmp']
+            -> Class['hp_mcp::hpsmh']
+            -> Anchor['hp_mcp::end']
           } else {
-            Anchor['hp_mcp::begin'] ->
-            Class['hp_mcp::repo'] ->
-            Class['hp_mcp::hphealth'] ->
-            Class['hp_mcp::hpsnmp'] ->
-            Anchor['hp_mcp::end']
+            Anchor['hp_mcp::begin']
+            -> Class['hp_mcp::repo']
+            -> Class['hp_mcp::hphealth']
+            -> Class['hp_mcp::hpsnmp']
+            -> Anchor['hp_mcp::end']
           }
         }
         # If we are not on a supported OS, do not do anything.

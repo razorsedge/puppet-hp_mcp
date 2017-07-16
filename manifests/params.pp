@@ -24,33 +24,43 @@ class hp_mcp::params {
 
   # If we have a top scope variable defined, use it, otherwise fall back to a
   # hardcoded value.
-  $yum_server = $::hp_mcp_yum_server ? {
-    undef   => 'http://downloads.linux.hpe.com',
-    default => $::hp_mcp_yum_server,
+  $hp_mcp_yum_server = getvar('::hp_mcp_yum_server')
+  if $hp_mcp_yum_server {
+    $yum_server = $::hp_mcp_yum_server
+  } else {
+    $yum_server = 'http://downloads.linux.hpe.com'
   }
 
-  $mcp_version = $::hp_mcp_mcp_version ? {
-    undef   => 'current',
-    default => $::hp_mcp_mcp_version,
+  $hp_mcp_mcp_version = getvar('::hp_mcp_mcp_version')
+  if $hp_mcp_mcp_version {
+    $mcp_version = $::hp_mcp_mcp_version
+  } else {
+    $mcp_version = 'current'
   }
 
 ### The following parameters should not need to be changed.
 
-  $ensure = $::hp_mcp_ensure ? {
-    undef => 'present',
-    default => $::hp_mcp_ensure,
+  $hp_mcp_ensure = getvar('::hp_mcp_ensure')
+  if $hp_mcp_ensure {
+    $ensure = $::hp_mcp_ensure
+  } else {
+    $ensure = 'present'
   }
 
-  $service_ensure = $::hp_mcp_service_ensure ? {
-    undef => 'running',
-    default => $::hp_mcp_service_ensure,
+  $hp_mcp_service_ensure = getvar('::hp_mcp_service_ensure')
+  if $hp_mcp_service_ensure {
+    $service_ensure = $::hp_mcp_service_ensure
+  } else {
+    $service_ensure = 'running'
   }
 
   # Since the top scope variable could be a string (if from an ENC), we might
   # need to convert it to a boolean.
-  $autoupgrade = $::hp_mcp_autoupgrade ? {
-    undef => false,
-    default => $::hp_mcp_autoupgrade,
+  $hp_mcp_autoupgrade = getvar('::hp_mcp_autoupgrade')
+  if $hp_mcp_autoupgrade {
+    $autoupgrade = $::hp_mcp_autoupgrade
+  } else {
+    $autoupgrade = false
   }
   if is_string($autoupgrade) {
     $safe_autoupgrade = str2bool($autoupgrade)
@@ -58,9 +68,11 @@ class hp_mcp::params {
     $safe_autoupgrade = $autoupgrade
   }
 
-  $service_enable = $::hp_mcp_service_enable ? {
-    undef => true,
-    default => $::hp_mcp_service_enable,
+  $hp_mcp_service_enable = getvar('::hp_mcp_service_enable')
+  if $hp_mcp_service_enable {
+    $service_enable = $::hp_mcp_service_enable
+  } else {
+    $service_enable = true
   }
   if is_string($service_enable) {
     $safe_service_enable = str2bool($service_enable)
@@ -102,7 +114,10 @@ class hp_mcp::params {
           $arrayweb_package_name = 'hpssa'
           $arraycli_package_name = 'hpssacli'
         }
-        default: { }
+        default: {
+          $arrayweb_package_name = undef
+          $arraycli_package_name = undef
+        }
       }
     }
     'OracleLinux', 'OEL': {
@@ -136,7 +151,10 @@ class hp_mcp::params {
           $arrayweb_package_name = 'hpssa'
           $arraycli_package_name = 'hpssacli'
         }
-        default: { }
+        default: {
+          $arrayweb_package_name = undef
+          $arraycli_package_name = undef
+        }
       }
     }
     # If we are not on a supported OS, do not do anything.

@@ -68,7 +68,7 @@ TODO
 Contributing
 ------------
 
-Please see DEVELOP.md for contribution information.
+Please see CONTRIBUTING.md for contribution information.
 
 License
 -------
